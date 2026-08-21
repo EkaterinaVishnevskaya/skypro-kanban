@@ -1,25 +1,181 @@
-function Card() {
+import styled from "styled-components";
+
+const SCardItem = styled.div`
+  padding: 5px;
+  animation-name: card-animation;
+  animation-duration: 500ms;
+  animation-timing-function: linear;
+`;
+const SCard = styled.div`
+  width: 220px;
+  height: 130px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: stretch;
+  padding: 15px 13px 19px;
+  @media screen and (max-width: 1200px) {
+    width: 220px;
+    height: 130px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: stretch;
+    padding: 15px 13px 19px;
+  }
+`;
+const SCardGroup = styled.div`
+  width: 100%;
+  height: 20px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const SCardContent = styled.div`
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+`;
+
+const SCardTitle = styled.h3`
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #000000;
+  margin-bottom: 10px;
+`;
+
+const SCardBtn = styled.div`
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 2px;
+`;
+
+const SCardBtnDiv = styled.div`
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #94a6be;
+`;
+
+const SCardDate = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const SCardDateP = styled.p`
+  margin-left: 6px;
+  font-size: 10px;
+  line-height: 13px;
+  color: #94a6be;
+  letter-spacing: 0.2px;
+`;
+
+const SCardDateSVG = styled.svg`
+  width: 13px;
+`;
+
+const SCardTheme = styled.div`
+  width: auto;
+  height: 20px;
+  padding: 5px 14px;
+  border-radius: 18px;
+`;
+
+const SCardThemeP = styled.p`
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 10px;
+`;
+
+const SCardOrangeTheme = styled(SCardTheme)`
+  background-color: #ffe4c2;
+`;
+const SCardOrangeThemeP = styled(SCardThemeP)`
+  color: #ff6d00;
+`;
+
+const SCardPurpleTheme = styled(SCardTheme)`
+  background-color: #e9d4ff;
+`;
+const SCardPurpleThemeP = styled(SCardThemeP)`
+  color: #9a48f1;
+`;
+
+const SCardGreenTheme = styled(SCardTheme)`
+  background-color: #b4fdd1;
+`;
+const SCardGreenThemeP = styled(SCardThemeP)`
+  color: #06b16e;
+`;
+
+const SCardGrayTheme = styled(SCardTheme)`
+  background-color: #94a6be;
+`;
+const SCardGrayThemeP = styled(SCardThemeP)`
+  color: #ffffff;
+`;
+
+function Card({ card }) {
+  const theme = () => {
+    switch (card.theme) {
+      case "Web Design":
+        return (
+          <SCardOrangeTheme>
+            <SCardOrangeThemeP>{card.theme}</SCardOrangeThemeP>
+          </SCardOrangeTheme>
+        );
+      case "Research":
+        return (
+          <SCardGreenTheme>
+            <SCardGreenThemeP>{card.theme}</SCardGreenThemeP>
+          </SCardGreenTheme>
+        );
+      case "Copywriting":
+        return (
+          <SCardPurpleTheme>
+            <SCardPurpleThemeP>{card.theme}</SCardPurpleThemeP>
+          </SCardPurpleTheme>
+        );
+      default:
+        return (
+          <SCardGrayTheme>
+            <SCardGrayThemeP>{card.theme}</SCardGrayThemeP>
+          </SCardGrayTheme>
+        );
+    }
+  };
   return (
-    <div class="cards__item">
-      <div class="cards__card card">
-        <div class="card__group">
-          <div class="card__theme _orange">
-            <p class="_orange">Web Design</p>
-          </div>
+    <SCardItem>
+      <SCard>
+        <SCardGroup>
+          {theme()}
           <a href="#popBrowse" target="_self">
-            <div class="card__btn">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
+            <SCardBtn>
+              <SCardBtnDiv></SCardBtnDiv>
+              <SCardBtnDiv></SCardBtnDiv>
+              <SCardBtnDiv></SCardBtnDiv>
+            </SCardBtn>
           </a>
-        </div>
-        <div class="card__content">
+        </SCardGroup>
+        <SCardContent>
           <a href="" target="_blank">
-            <h3 class="card__title">Название задачи</h3>
+            <SCardTitle>{card.title}</SCardTitle>
           </a>
-          <div class="card__date">
-            <svg
+          <SCardDate>
+            <SCardDateSVG
               xmlns="http://www.w3.org/2000/svg"
               width="13"
               height="13"
@@ -46,12 +202,12 @@ function Card() {
                   <rect width="13" height="13" fill="white" />
                 </clipPath>
               </defs>
-            </svg>
-            <p>30.10.23</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            </SCardDateSVG>
+            <SCardDateP>{card.date}</SCardDateP>
+          </SCardDate>
+        </SCardContent>
+      </SCard>
+    </SCardItem>
   );
 }
 export default Card;

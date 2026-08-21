@@ -1,8 +1,49 @@
+import PopUser from "../PopUser/PopUser";
+import styled from "styled-components";
+import { user } from "../../../data";
+
+const SHeader = styled.header`
+  width: 100%;
+  margin: 0 auto;
+  background-color: #ffffff;
+`;
+
+const SContainer = styled.div`
+  max-width: 1260px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 30px;
+  @media screen and (max-width: 495px) {
+    width: 100%;
+    padding: 0 16px;
+  }
+`;
+
+const SHeaderBlock = styled.div`
+  height: 70px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0 10px;
+`;
+
+const SHeaderNav = styled.nav`
+  max-width: 290px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 function Header() {
   return (
-    <header class="header">
-      <div class="container">
-        <div class="header__block">
+    <SHeader>
+      <SContainer>
+        <SHeaderBlock>
           <div class="header__logo _show _light">
             <a href="" target="_self">
               <img src="/images/logo.png" alt="logo"></img>
@@ -13,28 +54,18 @@ function Header() {
               <img src="/images/logo_dark.png" alt="logo"></img>
             </a>
           </div>
-          <nav class="header__nav">
+          <SHeaderNav>
             <button class="header__btn-main-new _hover01" id="btnMainNew">
               <a href="#popNewCard">Создать новую задачу</a>
             </button>
             <a href="#user-set-target" class="header__user _hover02">
-              Ivan Ivanov
+              {user.name}
             </a>
-            <div class="header__pop-user-set pop-user-set" id="user-set-target">
-              <p class="pop-user-set__name">Ivan Ivanov</p>
-              <p class="pop-user-set__mail">ivan.ivanov@gmail.com</p>
-              <div class="pop-user-set__theme">
-                <p>Темная тема</p>
-                <input type="checkbox" class="checkbox" name="checkbox"></input>
-              </div>
-              <button type="button" class="_hover03">
-                <a href="#popExit">Выйти</a>
-              </button>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </header>
+            <PopUser user={user} />
+          </SHeaderNav>
+        </SHeaderBlock>
+      </SContainer>
+    </SHeader>
   );
 }
 export default Header;
