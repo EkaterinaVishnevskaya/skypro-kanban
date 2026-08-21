@@ -1,10 +1,25 @@
-function Card() {
+function Card({ card }) {
+  let themeClass;
+  switch (card.theme) {
+    case "Web Design":
+      themeClass = "_orange";
+      break;
+    case "Research":
+      themeClass = "_green";
+      break;
+    case "Copywriting":
+      themeClass = "_purple";
+      break;
+    default:
+      break;
+  }
+
   return (
     <div class="cards__item">
       <div class="cards__card card">
         <div class="card__group">
-          <div class="card__theme _orange">
-            <p class="_orange">Web Design</p>
+          <div className={`card__theme ${themeClass}`}>
+            <p class={themeClass}>{card.theme}</p>
           </div>
           <a href="#popBrowse" target="_self">
             <div class="card__btn">
@@ -16,7 +31,7 @@ function Card() {
         </div>
         <div class="card__content">
           <a href="" target="_blank">
-            <h3 class="card__title">Название задачи</h3>
+            <h3 class="card__title">{card.title}</h3>
           </a>
           <div class="card__date">
             <svg
@@ -47,7 +62,7 @@ function Card() {
                 </clipPath>
               </defs>
             </svg>
-            <p>30.10.23</p>
+            <p>{card.date}</p>
           </div>
         </div>
       </div>
