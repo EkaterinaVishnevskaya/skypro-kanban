@@ -1,6 +1,13 @@
+import styled from "styled-components";
+
+const SCalendar= styled.div`
+  width: 182px;
+  margin-bottom: 20px;
+`;
+
 function Calendar() {
   return (
-    <div class="pop-new-card__calendar calendar">
+    <SCalendar>
       <p class="calendar__ttl subttl">Даты</p>
       <div class="calendar__block">
         <div class="calendar__nav">
@@ -84,7 +91,7 @@ function Calendar() {
           </p>
         </div>
       </div>
-    </div>
+    </SCalendar>
   );
 }
 export default Calendar;
