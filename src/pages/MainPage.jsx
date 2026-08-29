@@ -1,6 +1,5 @@
 import Header from '../components/Header/Header';
 import Main from '../components/Main/Main'
-import PopBrowse from '../components/PopBrowse/PopBrowse'
 import PopNewCard from '../components/PopNewCard/PopNewCard'
 
 function MainPage() {
@@ -25,8 +24,6 @@ function MainPage() {
             </div>
 
             <PopNewCard></PopNewCard>
-
-            <PopBrowse></PopBrowse>
 
             <Header></Header>
 
