@@ -44,7 +44,7 @@ function Main({ loading }) {
             {loading ? (
               <p>Идёт загрузка</p>
             ) : (
-              columns.map((item) => <Column taskStatus={item} />)
+              columns.map((item) => <Column key={item} taskStatus={item} />)
             )}
           </SMainContent>
         </SMainBlock>

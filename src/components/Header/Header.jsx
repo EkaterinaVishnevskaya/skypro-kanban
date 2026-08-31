@@ -1,6 +1,7 @@
 import PopUser from "../PopUser/PopUser";
 import styled from "styled-components";
 import { user } from "../../../data";
+import { useNavigate } from "react-router-dom";
 
 const SHeader = styled.header`
   width: 100%;
@@ -40,25 +41,29 @@ const SHeaderNav = styled.nav`
 `;
 
 function Header() {
+  const navigate = useNavigate();
+  const handleNewCardClick = () => {
+    navigate(`/new-card`)
+  }
   return (
     <SHeader>
       <SContainer>
         <SHeaderBlock>
-          <div class="header__logo _show _light">
+          <div className="header__logo _show _light">
             <a href="" target="_self">
               <img src="/images/logo.png" alt="logo"></img>
             </a>
           </div>
-          <div class="header__logo _dark">
+          <div className="header__logo _dark">
             <a href="" target="_self">
               <img src="/images/logo_dark.png" alt="logo"></img>
             </a>
           </div>
           <SHeaderNav>
-            <button class="header__btn-main-new _hover01" id="btnMainNew">
-              <a href="#popNewCard">Создать новую задачу</a>
+            <button className="header__btn-main-new _hover01" id="btnMainNew" onClick={handleNewCardClick}>
+              Создать новую задачу
             </button>
-            <a href="#user-set-target" class="header__user _hover02">
+            <a href="#user-set-target" className="header__user _hover02">
               {user.name}
             </a>
             <PopUser user={user} />

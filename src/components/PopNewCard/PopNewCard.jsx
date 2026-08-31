@@ -1,45 +1,74 @@
+import { useNavigate } from "react-router-dom";
 import Calendar from "../Calendar/Calendar";
 
 function PopNewCard() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/`);
+  };
   return (
-    <div class="pop-new-card" id="popNewCard">
-                <div class="pop-new-card__container">
-                    <div class="pop-new-card__block">
-                        <div class="pop-new-card__content">
-                            <h3 class="pop-new-card__ttl">Создание задачи</h3>
-                            <a href="#" class="pop-new-card__close">&#10006;</a>
-                            <div class="pop-new-card__wrap">
-                                <form class="pop-new-card__form form-new" id="formNewCard" action="#">
-                                    <div class="form-new__block">
-                                        <label for="formTitle" class="subttl">Название задачи</label>
-                                        <input class="form-new__input" type="text" name="name" id="formTitle" placeholder="Введите название задачи..." autofocus></input>
-                                    </div>
-                                    <div class="form-new__block">
-                                        <label for="textArea" class="subttl">Описание задачи</label>
-                                        <textarea class="form-new__area" name="text" id="textArea"  placeholder="Введите описание задачи..."></textarea>
-                                    </div>
-                                </form>
-                                <Calendar></Calendar>
-                            </div>
-                            <div class="pop-new-card__categories categories">
-                                <p class="categories__p subttl">Категория</p>
-                                <div class="categories__themes">
-                                    <div class="categories__theme _orange _active-category">
-                                        <p class="_orange">Web Design</p>
-                                    </div>
-                                    <div class="categories__theme _green">
-                                        <p class="_green">Research</p>
-                                    </div>
-                                    <div class="categories__theme _purple">
-                                        <p class="_purple">Copywriting</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="form-new__create _hover01" id="btnCreate">Создать задачу</button>
-                        </div>
-                    </div>
+    <div className="pop-new-card" id="popNewCard">
+      <div className="pop-new-card__container">
+        <div className="pop-new-card__block">
+          <div className="pop-new-card__content">
+            <h3 className="pop-new-card__ttl">Создание задачи</h3>
+            <button  className="pop-new-card__close" onClick={handleClick}>
+              &#10006;
+            </button>
+            <div className="pop-new-card__wrap">
+              <form
+                className="pop-new-card__form form-new"
+                id="formNewCard"
+                action="#"
+              >
+                <div className="form-new__block">
+                  <label forhtml="formTitle" className="subttl">
+                    Название задачи
+                  </label>
+                  <input
+                    className="form-new__input"
+                    type="text"
+                    name="name"
+                    id="formTitle"
+                    placeholder="Введите название задачи..."
+                    autoFocus
+                  ></input>
                 </div>
+                <div className="form-new__block">
+                  <label forhtml="textArea" className="subttl">
+                    Описание задачи
+                  </label>
+                  <textarea
+                    className="form-new__area"
+                    name="text"
+                    id="textArea"
+                    placeholder="Введите описание задачи..."
+                  ></textarea>
+                </div>
+              </form>
+              <Calendar></Calendar>
             </div>
+            <div className="pop-new-card__categories categories">
+              <p className="categories__p subttl">Категория</p>
+              <div className="categories__themes">
+                <div className="categories__theme _orange _active-category">
+                  <p className="_orange">Web Design</p>
+                </div>
+                <div className="categories__theme _green">
+                  <p className="_green">Research</p>
+                </div>
+                <div className="categories__theme _purple">
+                  <p className="_purple">Copywriting</p>
+                </div>
+              </div>
+            </div>
+            <button className="form-new__create _hover01" id="btnCreate" onClick={handleClick}>
+              Создать задачу
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 export default PopNewCard;

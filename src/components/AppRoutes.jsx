@@ -4,7 +4,8 @@ import MainPage from "../pages/MainPage";
 import SignInPage from "../pages/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
 import NotFoundPage from "../pages/NotFound";
-import { Card } from "../pages/Card";
+import CardPage from "../pages/CardPage";
+import NewCardPage from "../pages/NewCardPage";
 
 function AppRoutes() {
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,10 @@ function AppRoutes() {
         <Route path="/signin" element={<SignInPage />} />
         {/* Страница регистрации */}
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/card/:id" element={<Card />} />
+        {/* Страница карточки */}
+        <Route path="/card/:id" element={<CardPage />} />
+        {/* Страница новой карточки */}
+        <Route path="/new-card" element={<NewCardPage />} />
         {/* Страница не найдена */}
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
