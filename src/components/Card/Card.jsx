@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const SCardItem = styled.div`
@@ -129,6 +130,10 @@ const SCardGrayThemeP = styled(SCardThemeP)`
 `;
 
 function Card({ card }) {
+  const navigate = useNavigate();
+  const handleCardClick = () => {
+    navigate(`/card/${card.id}`)
+  }
   const theme = () => {
     switch (card.theme) {
       case "Web Design":
@@ -158,17 +163,17 @@ function Card({ card }) {
     }
   };
   return (
-    <SCardItem>
+    <SCardItem key = {card.id}>
       <SCard>
         <SCardGroup>
           {theme()}
-          <a href="#popBrowse" target="_self">
-            <SCardBtn>
+          {/* <a href="#popBrowse" target="_self"> */}
+            <SCardBtn onClick={handleCardClick}>
               <SCardBtnDiv></SCardBtnDiv>
               <SCardBtnDiv></SCardBtnDiv>
               <SCardBtnDiv></SCardBtnDiv>
             </SCardBtn>
-          </a>
+          {/* </a> */}
         </SCardGroup>
         <SCardContent>
           <a href="" target="_blank">

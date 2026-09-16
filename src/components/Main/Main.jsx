@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { columns } from "../../../data";
 import Column from "../Column/Column";
 import styled from "styled-components";
@@ -36,13 +35,7 @@ const SMainContent = styled.div`
   }
 `;
 
-function Main() {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
+function Main({ loading }) {
   return (
     <SMain>
       <SContainer>
@@ -51,7 +44,7 @@ function Main() {
             {loading ? (
               <p>Идёт загрузка</p>
             ) : (
-              columns.map((item) => <Column taskStatus={item} />)
+              columns.map((item) => <Column key={item} taskStatus={item} />)
             )}
           </SMainContent>
         </SMainBlock>

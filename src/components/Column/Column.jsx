@@ -45,7 +45,7 @@ function Column({ taskStatus }) {
       </STitle>
       <SCards>
         {cards.map((item) => (
-          <Card card={item} />
+          <Card key={item.id} card={item} />
         ))}
       </SCards>
     </SColumn>
