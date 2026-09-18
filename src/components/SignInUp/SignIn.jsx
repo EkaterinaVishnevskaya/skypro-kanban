@@ -104,7 +104,7 @@ function SignIn() {
         />
         <p style={{ color: "red" }}>{error}</p>
         <SSignUpButton id="btnEnter">
-          <SSignUpLinkButton onClick={handleSubmit}>Войти</SSignUpLinkButton>
+          <SSignUpLinkButton onSubmit={handleSubmit}>Войти</SSignUpLinkButton>
         </SSignUpButton>
         <SSignUpFormGroup>
           <SSignUpFormGroupP>Нужно зарегистрироваться?</SSignUpFormGroupP>

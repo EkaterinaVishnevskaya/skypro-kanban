@@ -1,17 +1,12 @@
 import axios from "axios";
 
-const API_URL = "https://wedev-api.sky.pro/api/kanban";
+export const api = axios.create({
+ baseURL: " https://wedev-api.sky.pro/api ",
+ headers: {
+ "Content-Type": "application/json",
+ },
+});
 
-export async function fetchTasks({ token }) {
-  try {
-    const data = await axios.get(API_URL, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    return data.data;
-    // когда работаем с axios, не забываем, что результат лежит в ключе datа
-  } catch (error) {
-    throw new Error(error.message, { cause: error });
-  }
+export function getErrorMessage(error) {
+ return error.response?.data?.error || error.response?.data?.message || error.message || "Произошла ошибка. Попробуйте ещё раз.";
 }

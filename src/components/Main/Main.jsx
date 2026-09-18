@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import { columns } from "../../../data";
 import Column from "../Column/Column";
 import styled from "styled-components";
+import { getToken } from "../../services/auth";
+import { fetchTasks } from "../../services/tasks";
 
 const SMain = styled.main`
   width: 100%;
@@ -36,12 +39,40 @@ const SMainContent = styled.div`
 `;
 
 function Main({ loading }) {
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function loadTasks() {
+      const token = getToken();
+
+      if (!token) {
+        setError("Сначала войдите в аккаунт");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        setError("");
+        const data = await fetchTasks(token);
+        setTasks(data);
+      } catch (requestError) {
+        setError(requestError.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadTasks();
+  }, []);
   return (
     <SMain>
       <SContainer>
         <SMainBlock>
           <SMainContent>
-            {loading ? (
+            {isLoading ? (
               <p>Идёт загрузка</p>
             ) : (
               columns.map((item) => <Column key={item} taskStatus={item} />)

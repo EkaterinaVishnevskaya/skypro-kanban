@@ -13,7 +13,7 @@ import { signUp } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function SignUp({ setIsAuth }) {
+function SignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -30,59 +30,56 @@ function SignUp({ setIsAuth }) {
 
   const [error, setError] = useState("");
 
-  const validateForm = () => {
-    const newErrors = { name: "", login: "", password: "" };
-    let isValid = true;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!formData.name.trim()) {
-      newErrors.name = true;
-      setError("Заполните все поля");
-      isValid = false;
-    }
-
-    if (!formData.login.trim()) {
-      newErrors.login = true;
-      setError("Заполните все поля");
-      isValid = false;
-    }
-
-    if (!formData.password.trim()) {
-      newErrors.password = true;
-      setError("Заполните все поля");
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((currentFormData) => ({
+      ...currentFormData,
       [name]: value,
-    });
+    }));
     setErrors({ ...errors, [name]: false });
     setError("");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const newErrors = {};
+    let isValid = true;
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Введите имя";
+      isValid = false;
+    }
+
+    if (!emailPattern.test(formData.login)) {
+      newErrors.login = "Введите корректный email";
+      isValid = false;
+    }
+
+    if (formData.password.length < 6) {
+      newErrors.password = "Пароль должен содержать минимум 6 символов";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (!isValid) {
       return;
     }
-    try {
-      const data = await signUp(formData);
 
-      if (data) {
-        setIsAuth(true);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-        navigate("/");
-      }
-    } catch (err) {
-      setError(err.message);
+    try {
+      const response = await signUp(formData);
+      localStorage.setItem("userInfo", JSON.stringify(response.user));
+      localStorage.setItem("token", response.token);
+      navigate("/");
+    } catch (requestError) {
+      setErrors({ form: requestError.message });
     }
-  };
+  }
   return (
     <SModalBlock>
       <SModalTitle>Регистрация</SModalTitle>
@@ -90,7 +87,7 @@ function SignUp({ setIsAuth }) {
         <SSignUpInput
           error={errors.name}
           type="text"
-          name="first-name"
+          name="name"
           id="first-name"
           placeholder="Имя"
           value={formData.name}
@@ -116,7 +113,7 @@ function SignUp({ setIsAuth }) {
         />
         <p style={{ color: "red" }}>{error}</p>
         <SSignUpButton id="SignUpEnter">
-          <SSignUpLinkButton onClick={handleSubmit}>
+          <SSignUpLinkButton onSubmit={handleSubmit}>
             Зарегистрироваться
           </SSignUpLinkButton>
         </SSignUpButton>
