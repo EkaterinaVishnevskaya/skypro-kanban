@@ -4,6 +4,7 @@ import Calendar from "../Calendar/Calendar";
 function PopNewCard() {
   const navigate = useNavigate();
   const handleClick = () => {
+    
     navigate(`/`);
   };
   return (

@@ -132,38 +132,39 @@ const SCardGrayThemeP = styled(SCardThemeP)`
 function Card({ card }) {
   const navigate = useNavigate();
   const handleCardClick = () => {
-    navigate(`/card/${card.id}`)
+    navigate(`/card/${card.id}`);
   }
+  const date = Date(card.date).toLocaleDateString("ru-RU");
   const theme = () => {
     switch (card.theme) {
       case "Web Design":
         return (
           <SCardOrangeTheme>
-            <SCardOrangeThemeP>{card.theme}</SCardOrangeThemeP>
+            <SCardOrangeThemeP>{card.topic}</SCardOrangeThemeP>
           </SCardOrangeTheme>
         );
       case "Research":
         return (
           <SCardGreenTheme>
-            <SCardGreenThemeP>{card.theme}</SCardGreenThemeP>
+            <SCardGreenThemeP>{card.topic}</SCardGreenThemeP>
           </SCardGreenTheme>
         );
       case "Copywriting":
         return (
           <SCardPurpleTheme>
-            <SCardPurpleThemeP>{card.theme}</SCardPurpleThemeP>
+            <SCardPurpleThemeP>{card.topic}</SCardPurpleThemeP>
           </SCardPurpleTheme>
         );
       default:
         return (
           <SCardGrayTheme>
-            <SCardGrayThemeP>{card.theme}</SCardGrayThemeP>
+            <SCardGrayThemeP>{card.topic}</SCardGrayThemeP>
           </SCardGrayTheme>
         );
     }
   };
   return (
-    <SCardItem key = {card.id}>
+    <SCardItem key = {card._id}>
       <SCard>
         <SCardGroup>
           {theme()}
@@ -177,7 +178,7 @@ function Card({ card }) {
         </SCardGroup>
         <SCardContent>
           <a href="" target="_blank">
-            <SCardTitle>{card.title}</SCardTitle>
+            <SCardTitle>{card.title || "Без названия"}</SCardTitle>
           </a>
           <SCardDate>
             <SCardDateSVG
@@ -208,7 +209,7 @@ function Card({ card }) {
                 </clipPath>
               </defs>
             </SCardDateSVG>
-            <SCardDateP>{card.date}</SCardDateP>
+            <SCardDateP>{date}</SCardDateP>
           </SCardDate>
         </SCardContent>
       </SCard>

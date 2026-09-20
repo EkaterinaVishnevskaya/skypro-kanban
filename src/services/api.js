@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export const api = axios.create({
- baseURL: " https://wedev-api.sky.pro/api ",
+ baseURL: "https://wedev-api.sky.pro/api",
  headers: {
- "Content-Type": "application/json",
+ "Content-Type": "",
  },
 });
 

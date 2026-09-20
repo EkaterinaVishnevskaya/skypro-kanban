@@ -38,7 +38,7 @@ const SMainContent = styled.div`
   }
 `;
 
-function Main({ loading }) {
+function Main() {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -57,7 +57,7 @@ function Main({ loading }) {
         setIsLoading(true);
         setError("");
         const data = await fetchTasks(token);
-        setTasks(data);
+        setTasks(data.tasks);
       } catch (requestError) {
         setError(requestError.message);
       } finally {
@@ -72,10 +72,14 @@ function Main({ loading }) {
       <SContainer>
         <SMainBlock>
           <SMainContent>
-            {isLoading ? (
+            {error ? (
+              <p>{error}</p>
+            ) : isLoading ? (
               <p>Идёт загрузка</p>
             ) : (
-              columns.map((item) => <Column key={item} taskStatus={item} />)
+              columns.map((item) => (
+                <Column key={item} taskStatus={item} tasks={tasks} />
+              ))
             )}
           </SMainContent>
         </SMainBlock>

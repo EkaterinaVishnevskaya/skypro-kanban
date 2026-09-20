@@ -61,19 +61,17 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
-      // если у нас форма не прошла валидацию, то дальше не продолжаем
       return;
     }
     try {
-      // чтобы не писать две разных функции, выберем нужный запрос через
-      // тернарный оператор
       const data = await signIn({
         login: formData.login,
         password: formData.password,
       });
 
       if (data) {
-        localStorage.setItem("userInfo", JSON.stringify(data));
+        localStorage.setItem("userInfo", JSON.stringify(data.user));
+        localStorage.setItem("token", data.user.token);
         navigate("/");
       }
     } catch (err) {
@@ -83,7 +81,7 @@ function SignIn() {
   return (
     <SModalBlock>
       <SModalTitle>Вход</SModalTitle>
-      <SSignUpForm id="formLogIn" action="#">
+      <SSignUpForm id="formLogIn" onSubmit={handleSubmit}>
         <SSignUpInput
           error={errors.login}
           type="text"
@@ -104,7 +102,7 @@ function SignIn() {
         />
         <p style={{ color: "red" }}>{error}</p>
         <SSignUpButton id="btnEnter">
-          <SSignUpLinkButton onSubmit={handleSubmit}>Войти</SSignUpLinkButton>
+          <SSignUpLinkButton>Войти</SSignUpLinkButton>
         </SSignUpButton>
         <SSignUpFormGroup>
           <SSignUpFormGroupP>Нужно зарегистрироваться?</SSignUpFormGroupP>

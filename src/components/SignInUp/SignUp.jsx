@@ -30,9 +30,31 @@ function SignUp() {
 
   const [error, setError] = useState("");
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const validateForm = () => {
+    const newErrors = {name: "", login: "", password: "" };
+    let isValid = true;
 
-  
+    if (!formData.name.trim()) {
+      newErrors.name = true;
+      setError("Заполните все поля");
+      isValid = false;
+    }
+
+    if (!formData.login.trim()) {
+      newErrors.login = true;
+      setError("Заполните все поля");
+      isValid = false;
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = true;
+      setError("Заполните все поля");
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,38 +65,18 @@ function SignUp() {
     setErrors({ ...errors, [name]: false });
     setError("");
   };
-
+  console.log("a");
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const newErrors = {};
-    let isValid = true;
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Введите имя";
-      isValid = false;
-    }
-
-    if (!emailPattern.test(formData.login)) {
-      newErrors.login = "Введите корректный email";
-      isValid = false;
-    }
-
-    if (formData.password.length < 6) {
-      newErrors.password = "Пароль должен содержать минимум 6 символов";
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-
-    if (!isValid) {
+    if (!validateForm()) {
       return;
     }
-
+    
     try {
       const response = await signUp(formData);
       localStorage.setItem("userInfo", JSON.stringify(response.user));
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("token", response.user.token);
       navigate("/");
     } catch (requestError) {
       setErrors({ form: requestError.message });
@@ -83,7 +85,7 @@ function SignUp() {
   return (
     <SModalBlock>
       <SModalTitle>Регистрация</SModalTitle>
-      <SSignUpForm id="formLogUp" action="#">
+      <SSignUpForm id="formLogUp" onSubmit={handleSubmit}>
         <SSignUpInput
           error={errors.name}
           type="text"
@@ -113,7 +115,7 @@ function SignUp() {
         />
         <p style={{ color: "red" }}>{error}</p>
         <SSignUpButton id="SignUpEnter">
-          <SSignUpLinkButton onSubmit={handleSubmit}>
+          <SSignUpLinkButton>
             Зарегистрироваться
           </SSignUpLinkButton>
         </SSignUpButton>
