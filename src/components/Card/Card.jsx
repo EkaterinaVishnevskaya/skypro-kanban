@@ -134,9 +134,9 @@ function Card({ card }) {
   const handleCardClick = () => {
     navigate(`/card/${card.id}`);
   }
-  const date = Date(card.date).toLocaleDateString("ru-RU");
+  
   const theme = () => {
-    switch (card.theme) {
+    switch (card.topic) {
       case "Web Design":
         return (
           <SCardOrangeTheme>
@@ -209,7 +209,7 @@ function Card({ card }) {
                 </clipPath>
               </defs>
             </SCardDateSVG>
-            <SCardDateP>{date}</SCardDateP>
+            <SCardDateP>{card.date}</SCardDateP>
           </SCardDate>
         </SCardContent>
       </SCard>

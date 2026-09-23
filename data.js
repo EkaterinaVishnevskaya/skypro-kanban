@@ -5,3 +5,4 @@ export const columns = [
   "ТЕСТИРОВАНИЕ",
   "ГОТОВО",
 ];
+export const topics = [{name:'Web Design', color:'_orange'}, {name:'Research', color:'_green'}, {name:'Copywriting', color:'_purple'}];
