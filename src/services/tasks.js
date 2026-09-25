@@ -13,6 +13,16 @@ export async function fetchTasks(token) {
   }
 }
 
+export async function getTaskById(id, token) {
+  console.log(token);
+  try {
+    const response = await api.get(`/kanban/${id}`, authConfig(token));
+    return response.data.task;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}
+
 export async function createTask(task, token) {
   try {
     const response = await api.post("/kanban", task, authConfig(token));
