@@ -1,7 +1,7 @@
 import PopUser from "../PopUser/PopUser";
 import styled from "styled-components";
-import { user } from "../../../data";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../../services/auth";
 
 const SHeader = styled.header`
   width: 100%;
@@ -45,6 +45,7 @@ function Header() {
   const handleNewCardClick = () => {
     navigate(`/new-card`)
   }
+  const user = getUser();
   return (
     <SHeader>
       <SContainer>

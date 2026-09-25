@@ -132,52 +132,63 @@ const SCardGrayThemeP = styled(SCardThemeP)`
 function Card({ card }) {
   const navigate = useNavigate();
   const handleCardClick = () => {
-    navigate(`/card/${card.id}`)
-  }
+    navigate(`/card/${card._id}`);
+  };
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2);
+
+    return `${day}.${month}.${year}`;
+  };
+
   const theme = () => {
-    switch (card.theme) {
+    switch (card.topic) {
       case "Web Design":
         return (
           <SCardOrangeTheme>
-            <SCardOrangeThemeP>{card.theme}</SCardOrangeThemeP>
+            <SCardOrangeThemeP>{card.topic}</SCardOrangeThemeP>
           </SCardOrangeTheme>
         );
       case "Research":
         return (
           <SCardGreenTheme>
-            <SCardGreenThemeP>{card.theme}</SCardGreenThemeP>
+            <SCardGreenThemeP>{card.topic}</SCardGreenThemeP>
           </SCardGreenTheme>
         );
       case "Copywriting":
         return (
           <SCardPurpleTheme>
-            <SCardPurpleThemeP>{card.theme}</SCardPurpleThemeP>
+            <SCardPurpleThemeP>{card.topic}</SCardPurpleThemeP>
           </SCardPurpleTheme>
         );
       default:
         return (
           <SCardGrayTheme>
-            <SCardGrayThemeP>{card.theme}</SCardGrayThemeP>
+            <SCardGrayThemeP>{card.topic}</SCardGrayThemeP>
           </SCardGrayTheme>
         );
     }
   };
   return (
-    <SCardItem key = {card.id}>
+    <SCardItem key={card._id}>
       <SCard>
         <SCardGroup>
           {theme()}
           {/* <a href="#popBrowse" target="_self"> */}
-            <SCardBtn onClick={handleCardClick}>
-              <SCardBtnDiv></SCardBtnDiv>
-              <SCardBtnDiv></SCardBtnDiv>
-              <SCardBtnDiv></SCardBtnDiv>
-            </SCardBtn>
+          <SCardBtn onClick={handleCardClick}>
+            <SCardBtnDiv></SCardBtnDiv>
+            <SCardBtnDiv></SCardBtnDiv>
+            <SCardBtnDiv></SCardBtnDiv>
+          </SCardBtn>
           {/* </a> */}
         </SCardGroup>
         <SCardContent>
           <a href="" target="_blank">
-            <SCardTitle>{card.title}</SCardTitle>
+            <SCardTitle>{card.title || "Без названия"}</SCardTitle>
           </a>
           <SCardDate>
             <SCardDateSVG
@@ -208,7 +219,7 @@ function Card({ card }) {
                 </clipPath>
               </defs>
             </SCardDateSVG>
-            <SCardDateP>{card.date}</SCardDateP>
+            <SCardDateP>{formatDate(card.date)}</SCardDateP>
           </SCardDate>
         </SCardContent>
       </SCard>
