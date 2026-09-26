@@ -1,22 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import Calendar from "../Calendar/Calendar";
-import { useEffect, useState } from "react";
-import { topics } from "../../../data";
+import { useState } from "react";
+import { columns, topics } from "../../../data";
 import { deleteTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
 
 function PopBrowse({ card }) {
+  console.log(card);
   const [editing, setEditing] = useState(false);
-  const [title, setTitle] = useState(card.title);
-  const [topic, setTopic] = useState(card.topic);
-  const [description, setDescription] = useState(card.description);
-  useEffect(() => {}, [title, topic, description]);
-  console.log(title);
+  const [title, setTitle] = useState(String(card.title));
+  const [topic, setTopic] = useState(String(card.topic));
+  const [description, setDescription] = useState(String(card.description));
+  const [status, setStatus] = useState(String(card.status));
   const navigate = useNavigate();
+  console.log(title);
   const handleCloseClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     navigate(`/`);
+  };
+  const handleStatusClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setStatus(e.i)
   };
   const handleEditClick = (e) => {
     e.preventDefault();
@@ -58,23 +64,21 @@ function PopBrowse({ card }) {
               </div>
               <div className="pop-browse__status status">
                 <p className="status__p subttl">Статус</p>
-                <div className="status__themes">
-                  <div className="status__theme _hide">
-                    <p>Без статуса</p>
+                {editing ? (
+                  <div className="status__themes">
+                    {columns.map((i) => {
+                      <div className={`status__theme ${i==status? '_gray': ''}`} onClick={() => setStatus(String(i))}>
+                        <p className={i==status? 'gray': ''}>{i}</p>
+                      </div>;
+                    })}
                   </div>
-                  <div className="status__theme _gray">
-                    <p className="_gray">Нужно сделать</p>
+                ) : (
+                  <div className="status__themes">
+                    <div className="status__theme _gray">
+                      <p className="_gray">{card.status}</p>
+                    </div>
                   </div>
-                  <div className="status__theme _hide">
-                    <p>В работе</p>
-                  </div>
-                  <div className="status__theme _hide">
-                    <p>Тестирование</p>
-                  </div>
-                  <div className="status__theme _hide">
-                    <p>Готово</p>
-                  </div>
-                </div>
+                )}
               </div>
               <div className="pop-browse__wrap">
                 <form

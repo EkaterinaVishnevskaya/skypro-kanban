@@ -34,9 +34,12 @@ const SCards = styled.div`
 `;
 
 function Column({ taskStatus, tasks }) {
+  console.log(taskStatus);
+  console.log(tasks);
   let cards = tasks.filter((card) => {
-    return card.status.toLowerCase() == taskStatus.toLowerCase();
+    return card.status == taskStatus;
   });
+  console.log(cards);
   return (
     <SColumn>
       <STitle>
