@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import Calendar from "../Calendar/Calendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { columns, topics } from "../../../data";
-import { deleteTask } from "../../services/tasks";
+import { deleteTask, updateTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
+import desc from "../../../node_modules/dunder-proto/get";
 
 function PopBrowse({ card }) {
-  console.log(card);
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState(String(card.title));
   const [topic, setTopic] = useState(String(card.topic));
@@ -19,10 +19,15 @@ function PopBrowse({ card }) {
     e.stopPropagation();
     navigate(`/`);
   };
-  const handleStatusClick = (e) => {
+  const handleSaveClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setStatus(e.i)
+    updateTask(
+      card.id,
+      { title: title, topic: topic, description: description, status: status },
+      getToken(),
+    );
+    navigate(`/`);
   };
   const handleEditClick = (e) => {
     e.preventDefault();
@@ -46,6 +51,9 @@ function PopBrowse({ card }) {
     deleteTask(card._id, card, getToken());
     navigate(`/`);
   };
+  useEffect(() => {
+    console.log(title, topic, description, status);
+  }, [title, topic, description, status]);
   return (
     <>
       <div className="pop-browse" id="popBrowse">
@@ -55,9 +63,11 @@ function PopBrowse({ card }) {
               <div className="pop-browse__top-block">
                 <h3 className="pop-browse__ttl">{title}</h3>
                 <div
-                  className={`categories__theme theme-top ${topics.find((i) => i.name == topic) || "_gray"} _active-category`}
+                  className={`categories__theme theme-top ${topics.find(
+                    (v) => v.name === topic,
+                  )} _active-category`}
                 >
-                  <p className={topics.find((i) => i.name == topic) || "_gray"}>
+                  <p className={topics.find((v) => v.name === topic)}>
                     {topic}
                   </p>
                 </div>
@@ -66,11 +76,14 @@ function PopBrowse({ card }) {
                 <p className="status__p subttl">Статус</p>
                 {editing ? (
                   <div className="status__themes">
-                    {columns.map((i) => {
-                      <div className={`status__theme ${i==status? '_gray': ''}`} onClick={() => setStatus(String(i))}>
-                        <p className={i==status? 'gray': ''}>{i}</p>
-                      </div>;
-                    })}
+                    {columns.map((i) => (
+                      <div
+                        className={`status__theme ${i == status ? "_gray _active-category" : ""}`}
+                        onClick={() => setStatus(String(i))}
+                      >
+                        <p className={i == status ? "_gray" : ""}>{i}</p>
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className="status__themes">
@@ -137,7 +150,7 @@ function PopBrowse({ card }) {
               ) : (
                 <div className="pop-browse__btn-edit">
                   <div className="btn-group">
-                    <button className="btn-edit__edit _btn-bg _hover01">
+                    <button className="btn-edit__edit _btn-bg _hover01" onClick={handleSaveClick}>
                       Сохранить
                     </button>
                     <button
