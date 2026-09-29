@@ -4,16 +4,23 @@ import { useEffect, useState } from "react";
 import { columns, topics } from "../../../data";
 import { deleteTask, updateTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
-import desc from "../../../node_modules/dunder-proto/get";
 
 function PopBrowse({ card }) {
+  console.log(card);
   const [editing, setEditing] = useState(false);
-  const [title, setTitle] = useState(String(card.title));
-  const [topic, setTopic] = useState(String(card.topic));
-  const [description, setDescription] = useState(String(card.description));
-  const [status, setStatus] = useState(String(card.status));
+  const [title, setTitle] = useState("");
+  const [topic, setTopic] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("");
   const navigate = useNavigate();
-  console.log(title);
+  useEffect(() => {
+    if(!card) return;
+    setTitle(card.title ?? "");
+    setTopic(card.topic ?? "");
+    setDescription(card.description ?? "");
+    setStatus(card.status ?? "");
+    console.log(title, topic, description, status);
+  }, [card]);
   const handleCloseClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -23,7 +30,7 @@ function PopBrowse({ card }) {
     e.preventDefault();
     e.stopPropagation();
     updateTask(
-      card.id,
+      card._id,
       { title: title, topic: topic, description: description, status: status },
       getToken(),
     );
@@ -51,9 +58,7 @@ function PopBrowse({ card }) {
     deleteTask(card._id, card, getToken());
     navigate(`/`);
   };
-  useEffect(() => {
-    console.log(title, topic, description, status);
-  }, [title, topic, description, status]);
+  
   return (
     <>
       <div className="pop-browse" id="popBrowse">
@@ -65,9 +70,9 @@ function PopBrowse({ card }) {
                 <div
                   className={`categories__theme theme-top ${topics.find(
                     (v) => v.name === topic,
-                  )} _active-category`}
+                  )?.color} _active-category`}
                 >
-                  <p className={topics.find((v) => v.name === topic)}>
+                  <p className={topics.find((v) => v.name === topic)?.color}>
                     {topic}
                   </p>
                 </div>

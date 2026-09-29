@@ -24,8 +24,6 @@ function PopNewCard() {
     await createTask(newTask, getToken());
     navigate(`/`);
   };
-
-  console.log(topics);
   return (
     <div className="pop-new-card" id="popNewCard">
       <div className="pop-new-card__container">

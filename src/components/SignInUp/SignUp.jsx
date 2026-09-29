@@ -65,7 +65,6 @@ function SignUp() {
     setErrors({ ...errors, [name]: false });
     setError("");
   };
-  console.log("a");
   async function handleSubmit(event) {
     event.preventDefault();
 
