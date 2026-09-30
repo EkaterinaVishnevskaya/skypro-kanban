@@ -6,6 +6,7 @@ import SignUpPage from "../pages/SignUpPage";
 import NotFoundPage from "../pages/NotFound";
 import CardPage from "../pages/CardPage";
 import NewCardPage from "../pages/NewCardPage";
+import PrivateRoute from "./PrivateRoute";
 
 function AppRoutes() {
   const [loading, setLoading] = useState(true);
@@ -19,16 +20,18 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Главная страница */}
-        <Route path="/" element={<MainPage loading={loading} />} />
+        <Route element={<PrivateRoute></PrivateRoute>}>
+          {/* Главная страница */}
+          <Route path="/" element={<MainPage loading={loading} />} />
+          {/* Страница карточки */}
+          <Route path="/card/:id" element={<CardPage />} />
+          {/* Страница новой карточки */}
+          <Route path="/new-card" element={<NewCardPage />} />
+        </Route>
         {/* Страница входа */}
         <Route path="/signin" element={<SignInPage />} />
         {/* Страница регистрации */}
         <Route path="/signup" element={<SignUpPage />} />
-        {/* Страница карточки */}
-        <Route path="/card/:id" element={<CardPage />} />
-        {/* Страница новой карточки */}
-        <Route path="/new-card" element={<NewCardPage />} />
         {/* Страница не найдена */}
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
