@@ -22,11 +22,12 @@ function AppRoutes() {
       <Routes>
         <Route element={<PrivateRoute></PrivateRoute>}>
           {/* Главная страница */}
-          <Route path="/" element={<MainPage loading={loading} />} />
-          {/* Страница карточки */}
-          <Route path="/card/:id" element={<CardPage />} />
-          {/* Страница новой карточки */}
-          <Route path="/new-card" element={<NewCardPage />} />
+          <Route path="/" element={<MainPage loading={loading} />}>
+            {/* Страница карточки */}
+            <Route path="/card/:id" element={<CardPage />} />
+            {/* Страница новой карточки */}
+            <Route path="/new-card" element={<NewCardPage />} />
+          </Route>
         </Route>
         {/* Страница входа */}
         <Route path="/signin" element={<SignInPage />} />

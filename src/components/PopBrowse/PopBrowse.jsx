@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { columns, topics } from "../../../data";
 import { deleteTask, updateTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
+import DatePicker from "react-datepicker";
 
 function PopBrowse({ card }) {
   console.log(card);
@@ -12,13 +13,15 @@ function PopBrowse({ card }) {
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
+  const [date, setDate] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
-    if(!card) return;
+    if (!card) return;
     setTitle(card.title ?? "");
     setTopic(card.topic ?? "");
     setDescription(card.description ?? "");
     setStatus(card.status ?? "");
+    setDate(card.date ?? "");
     console.log(title, topic, description, status);
   }, [card]);
   const handleCloseClick = (e) => {
@@ -31,7 +34,13 @@ function PopBrowse({ card }) {
     e.stopPropagation();
     updateTask(
       card._id,
-      { title: title, topic: topic, description: description, status: status },
+      {
+        title: title,
+        topic: topic,
+        description: description,
+        status: status,
+        date: date,
+      },
       getToken(),
     );
     navigate(`/`);
@@ -55,10 +64,10 @@ function PopBrowse({ card }) {
     e.preventDefault();
     e.stopPropagation();
 
-    deleteTask(card._id, card, getToken());
+    deleteTask(card._id, getToken());
     navigate(`/`);
   };
-  
+
   return (
     <>
       <div className="pop-browse" id="popBrowse">
@@ -68,9 +77,9 @@ function PopBrowse({ card }) {
               <div className="pop-browse__top-block">
                 <h3 className="pop-browse__ttl">{title}</h3>
                 <div
-                  className={`categories__theme theme-top ${topics.find(
-                    (v) => v.name === topic,
-                  )?.color} _active-category`}
+                  className={`categories__theme theme-top ${
+                    topics.find((v) => v.name === topic)?.color
+                  } _active-category`}
                 >
                   <p className={topics.find((v) => v.name === topic)?.color}>
                     {topic}
@@ -121,7 +130,12 @@ function PopBrowse({ card }) {
                     ></textarea>
                   </div>
                 </form>
-                <Calendar></Calendar>
+                <DatePicker
+                  selected={Date(date)}
+                  onChange={(selectedDate) =>
+                    setDate(selectedDate.toISOString())
+                  }
+                />
               </div>
               <div className="theme-down__categories theme-down">
                 <p className="categories__p subttl">Категория</p>
@@ -155,7 +169,10 @@ function PopBrowse({ card }) {
               ) : (
                 <div className="pop-browse__btn-edit">
                   <div className="btn-group">
-                    <button className="btn-edit__edit _btn-bg _hover01" onClick={handleSaveClick}>
+                    <button
+                      className="btn-edit__edit _btn-bg _hover01"
+                      onClick={handleSaveClick}
+                    >
                       Сохранить
                     </button>
                     <button

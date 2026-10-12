@@ -4,22 +4,27 @@ import { topics } from "../../../data";
 import { useState } from "react";
 import { createTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
+import DatePicker from "react-datepicker";
 
 function PopNewCard() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [topic, setTopic] = useState("Web Design");
+  const [date, setDate] = useState(new Date().toISOString());
   const navigate = useNavigate();
-  const handleClick =() => {
+  const handleClick = () => {
     navigate(`/`);
-  }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    /*     if (!title || !description) {
+      alert("Заполните все поля");
+    } */
     const newTask = {
       title: title || "Новая задача",
-      description: description || "",
-      topic,
-      date: new Date().toISOString(),
+      description: description || " ",
+      topic: topic,
+      date: date,
     };
     await createTask(newTask, getToken());
     navigate(`/`);
@@ -69,7 +74,11 @@ function PopNewCard() {
                   ></textarea>
                 </div>
               </form>
-              <Calendar></Calendar>
+              <DatePicker
+                selected={Date(date)}
+                onChange={(selectedDate) => setDate(selectedDate.toISOString())}
+                style="width: 182px; margin-bottom: 20px;"
+              />
             </div>
             <div className="pop-new-card__categories categories">
               <p className="categories__p subttl">Категория</p>
@@ -84,7 +93,11 @@ function PopNewCard() {
                 ))}
               </div>
             </div>
-            <button className="form-new__create _hover01" id="btnCreate" form="formNewCard">
+            <button
+              className="form-new__create _hover01"
+              id="btnCreate"
+              form="formNewCard"
+            >
               Создать задачу
             </button>
           </div>
