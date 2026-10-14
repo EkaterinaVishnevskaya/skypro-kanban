@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { cardList } from "../../../data";
 import Card from "../Card/Card";
 
 
@@ -34,10 +33,13 @@ const SCards = styled.div`
   }
 `;
 
-function Column({ taskStatus }) {
-  let cards = cardList.filter((card) => {
+function Column({ taskStatus, tasks }) {
+  console.log(taskStatus);
+  console.log(tasks);
+  let cards = tasks.filter((card) => {
     return card.status == taskStatus;
   });
+  console.log(cards);
   return (
     <SColumn>
       <STitle>
