@@ -131,13 +131,8 @@ function PopBrowse({ card }) {
                     ></textarea>
                   </div>
                 </form>
-                <DatePicker
-                  selected={Date(date)}
-                  onChange={(selectedDate) =>
-                    setDate(selectedDate.toISOString())
-                  }
-                  inline
-                />
+                <Calendar date={date} setDate={setDate}
+              />
               </div>
               <div className="theme-down__categories theme-down">
                 <p className="categories__p subttl">Категория</p>

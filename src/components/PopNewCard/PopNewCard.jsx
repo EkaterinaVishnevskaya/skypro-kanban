@@ -28,6 +28,7 @@ function PopNewCard() {
       date: date,
     };
     await createTask(newTask, getToken());
+    
     navigate(`/`);
   };
   return (
