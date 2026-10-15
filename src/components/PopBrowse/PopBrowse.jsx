@@ -5,6 +5,7 @@ import { columns, topics } from "../../../data";
 import { deleteTask, updateTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function PopBrowse({ card }) {
   console.log(card);
@@ -135,6 +136,7 @@ function PopBrowse({ card }) {
                   onChange={(selectedDate) =>
                     setDate(selectedDate.toISOString())
                   }
+                  inline
                 />
               </div>
               <div className="theme-down__categories theme-down">

@@ -4,7 +4,7 @@ import { topics } from "../../../data";
 import { useState } from "react";
 import { createTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
-import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function PopNewCard() {
   const [title, setTitle] = useState("");
@@ -17,9 +17,10 @@ function PopNewCard() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    /*     if (!title || !description) {
+    if (!title || !description) {
       alert("Заполните все поля");
-    } */
+      return;
+    } 
     const newTask = {
       title: title || "Новая задача",
       description: description || " ",
@@ -74,10 +75,7 @@ function PopNewCard() {
                   ></textarea>
                 </div>
               </form>
-              <DatePicker
-                selected={Date(date)}
-                onChange={(selectedDate) => setDate(selectedDate.toISOString())}
-                style="width: 182px; margin-bottom: 20px;"
+              <Calendar date={date} setDate={setDate}
               />
             </div>
             <div className="pop-new-card__categories categories">
