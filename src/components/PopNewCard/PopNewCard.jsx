@@ -6,7 +6,7 @@ import { createTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
 import "react-datepicker/dist/react-datepicker.css";
 
-function PopNewCard() {
+function PopNewCard({ setTasks}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [topic, setTopic] = useState("Web Design");
@@ -27,8 +27,7 @@ function PopNewCard() {
       topic: topic,
       date: date,
     };
-    await createTask(newTask, getToken());
-    
+    setTasks(await createTask(newTask, getToken()));
     navigate(`/`);
   };
   return (

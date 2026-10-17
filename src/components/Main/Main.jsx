@@ -38,8 +38,7 @@ const SMainContent = styled.div`
   }
 `;
 
-function Main() {
-  const [tasks, setTasks] = useState([]);
+function Main( {tasks, setTasks}) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 

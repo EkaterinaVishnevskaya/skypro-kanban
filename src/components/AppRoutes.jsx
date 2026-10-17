@@ -10,8 +10,10 @@ import PrivateRoute from "./PrivateRoute";
 
 function AppRoutes() {
   const [loading, setLoading] = useState(true);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
+
     setTimeout(() => {
       setLoading(false);
     }, 3000);
@@ -22,9 +24,9 @@ function AppRoutes() {
       <Routes>
         <Route element={<PrivateRoute></PrivateRoute>}>
           {/* Главная страница */}
-          <Route path="/" element={<MainPage loading={loading} />}>
+          <Route path="/" element={<MainPage loading={loading} tasks={tasks} setTasks={setTasks} />}>
             {/* Страница карточки */}
-            <Route path="/card/:id" element={<CardPage />} />
+            <Route path="/card/:id" element={<CardPage setTasks/>} />
             {/* Страница новой карточки */}
             <Route path="/new-card" element={<NewCardPage />} />
           </Route>

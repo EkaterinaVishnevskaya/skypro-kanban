@@ -4,7 +4,7 @@ import { getTaskById } from "../services/tasks";
 import { getToken } from "../services/auth";
 import { useEffect, useState } from "react";
 
-function CardPage() {
+function CardPage({setTasks}) {
   const { id } = useParams();
   const [card, setCard] = useState("");
   const [error, setError] = useState("");
@@ -28,7 +28,7 @@ function CardPage() {
 
     loadTask();
   }, [id]);
-  return error ? <p>{error}</p> : <PopBrowse card={card} />;
+  return error ? <p>{error}</p> : <PopBrowse card={card} setTasks={setTasks}/>;
 }
 
 export default CardPage;

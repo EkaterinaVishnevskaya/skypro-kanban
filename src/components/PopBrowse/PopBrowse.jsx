@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import { columns, topics } from "../../../data";
 import { deleteTask, updateTask } from "../../services/tasks";
 import { getToken } from "../../services/auth";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function PopBrowse({ card }) {
+function PopBrowse({ card, setTasks}) {
   console.log(card);
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState("");
@@ -33,7 +32,7 @@ function PopBrowse({ card }) {
   const handleSaveClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    updateTask(
+    setTasks(updateTask(
       card._id,
       {
         title: title,
@@ -43,7 +42,7 @@ function PopBrowse({ card }) {
         date: date,
       },
       getToken(),
-    );
+    ))
     navigate(`/`);
   };
   const handleEditClick = (e) => {
@@ -65,7 +64,7 @@ function PopBrowse({ card }) {
     e.preventDefault();
     e.stopPropagation();
 
-    deleteTask(card._id, getToken());
+    setTasks(deleteTask(card._id, getToken()));
     navigate(`/`);
   };
 

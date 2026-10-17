@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import Main from "../components/Main/Main";
 
-function MainPage() {
+function MainPage({ tasks, setTasks}) {
   return (
     <>
       <div className="wrapper">
@@ -28,7 +28,7 @@ function MainPage() {
 
         <Header></Header>
 
-        <Main></Main>
+        <Main tasks={tasks} setTasks={setTasks}></Main>
         <Outlet />
       </div>
     </>
